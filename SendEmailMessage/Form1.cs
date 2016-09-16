@@ -25,17 +25,21 @@ namespace SendEmailMessage
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            login = new NetworkCredential(txtUsername.Text, txtPasswrod.Text);  //Send The Credential to smtp Credential
+            progressBar1.Value = 0;
 
+            login = new NetworkCredential(txtUsername.Text, txtPasswrod.Text);  //Send The Credential to smtp Credential
+            progressBar1.PerformStep();
             client = new SmtpClient(txtSmtp.Text); // Give the smtp the (Google smtp)
             client.Port = Convert.ToInt32(txtPort.Text); // Give the smtp port (Google Port)
             client.EnableSsl = chkSSL.Checked; // Give the smtp the SSL if we need it or not!
             client.Credentials = login; // Give the smtp the Login(Credential)
+            progressBar1.PerformStep();
 
             msg = new MailMessage
             {
                 From = new MailAddress(txtUsername.Text + txtSmtp.Text.Replace("smtp.", "@"), "Lucy", Encoding.UTF8)
             }; // Send From
+            progressBar1.PerformStep();
 
             msg.To.Add(new MailAddress(txtTo.Text)); // Send To
 
@@ -45,16 +49,23 @@ namespace SendEmailMessage
             }
 
             msg.Subject = txtSubject.Text; // Message Subject
+            progressBar1.PerformStep();
             msg.Body = txtMessage.Text; // Message Content
+            progressBar1.PerformStep();
             msg.BodyEncoding = Encoding.UTF8; // Message Encoding
+            progressBar1.PerformStep();
             msg.IsBodyHtml = true; // Message have HTML Formate or not 
+            progressBar1.PerformStep();
             msg.Priority = MailPriority.High; // Message Priority (الاهميه او الاولويه)
+            progressBar1.PerformStep();
 
-            msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess; 
+            msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
-            client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallBack);
-            string UserState = "Sending...";
-            client.SendAsync(msg, UserState);
+            client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallBack); // Create Event Name (SendCompletedCallBack)
+            string Userstate = "Sending..."; // Must u add it Becoz the Event need UserState
+            client.SendAsync(msg, Userstate); // Send Message From Smtp to Sender(USER HOW SEND My EMAIL) 
+            progressBar1.PerformStep();
+            progressBar1.PerformStep();
 
         }
 
@@ -67,5 +78,6 @@ namespace SendEmailMessage
             else
                 MessageBox.Show("Your Message has been successfully send", "Success", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+
     }
 }

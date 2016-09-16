@@ -47,6 +47,7 @@
             this.txtSmtp = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -221,12 +222,21 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(116, 20);
             this.txtUsername.TabIndex = 0;
+            this.txtUsername.Text = "bobbyeden070";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(87, 376);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(451, 23);
+            this.progressBar1.TabIndex = 10;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 378);
+            this.ClientSize = new System.Drawing.Size(600, 411);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtMessage);
@@ -266,6 +276,7 @@
         private System.Windows.Forms.TextBox txtSmtp;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtUsername;
+        public System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
