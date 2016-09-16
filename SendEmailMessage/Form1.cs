@@ -25,28 +25,32 @@ namespace SendEmailMessage
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            login = new NetworkCredential(txtUsername.Text, txtPasswrod.Text);
+            login = new NetworkCredential(txtUsername.Text, txtPasswrod.Text);  //Send The Credential to smtp Credential
 
-            client = new SmtpClient(txtSmtp.Text);
-            client.Port = Convert.ToInt32(txtPort.Text);
-            client.EnableSsl = chkSSL.Checked;
-            client.Credentials = login;
+            client = new SmtpClient(txtSmtp.Text); // Give the smtp the (Google smtp)
+            client.Port = Convert.ToInt32(txtPort.Text); // Give the smtp port (Google Port)
+            client.EnableSsl = chkSSL.Checked; // Give the smtp the SSL if we need it or not!
+            client.Credentials = login; // Give the smtp the Login(Credential)
 
-            msg = new MailMessage { From = new MailAddress(txtUsername.Text + txtSmtp.Text.Replace("smtp.", "@"), "Lucy", Encoding.UTF8) };
-            msg.To.Add(new MailAddress(txtTo.Text));
-
-            if (!string.IsNullOrEmpty(txtCC.Text))
+            msg = new MailMessage
             {
-                msg.To.Add(txtCC.Text);
+                From = new MailAddress(txtUsername.Text + txtSmtp.Text.Replace("smtp.", "@"), "Lucy", Encoding.UTF8)
+            }; // Send From
+
+            msg.To.Add(new MailAddress(txtTo.Text)); // Send To
+
+            if (!string.IsNullOrEmpty(txtCC.Text)) 
+            {
+                msg.To.Add(txtCC.Text); // Send to Many Email
             }
 
-            msg.Subject = txtSubject.Text;
-            msg.Body = txtMessage.Text;
-            msg.BodyEncoding = Encoding.UTF8;
-            msg.IsBodyHtml = true;
-            msg.Priority = MailPriority.High;
+            msg.Subject = txtSubject.Text; // Message Subject
+            msg.Body = txtMessage.Text; // Message Content
+            msg.BodyEncoding = Encoding.UTF8; // Message Encoding
+            msg.IsBodyHtml = true; // Message have HTML Formate or not 
+            msg.Priority = MailPriority.High; // Message Priority (الاهميه او الاولويه)
 
-            msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess; 
 
             client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallBack);
             string UserState = "Sending...";
